@@ -1,7 +1,6 @@
 import pandas as pd
 
 def daily_returns(data):
-    data = data.copy()
     data["Daily Returns"] = data["Close"].pct_change()
     return data
 
@@ -58,7 +57,6 @@ def is_above_ma(data, window=50):
     ma = moving_average(data, window)
     current_price = data["Adj Close"].iloc[-1]
     current_ma = ma.iloc[-1]
-    print(current_ma, current_price)
     return current_price > current_ma
 
 
