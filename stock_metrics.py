@@ -39,4 +39,27 @@ def total_return_percentage(history):
     total_return = ((end/start)-1) * 100
     return float(total_return) 
 
+def recent_return(data, days=21):
+    data = data.copy()
+    if len(data) < days:
+        return None
+    
+    end = data["Adj Close"].iloc[-days]
+    start = data["Adj Close"].iloc[-1]
+
+    recent = (end/start) - 1
+    return float(recent)
+
+def moving_average(data, window=50):
+    average = data["Adj Close"].rolling(window=window).mean()
+    return average
+
+def is_above_ma(data, window=50):
+    ma = moving_average(data, window)
+    current_price = data["Adj Close"].iloc[-1]
+    current_ma = ma.iloc[-1]
+    print(current_ma, current_price)
+    return current_price > current_ma
+
+
 
