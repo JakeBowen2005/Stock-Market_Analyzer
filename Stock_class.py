@@ -17,5 +17,13 @@ class Stock:
         self.one_week_return = stock_metrics.recent_return(self.price_history, days=5)
         self.one_month_return = stock_metrics.recent_return(self.price_history, days=21)
         self.is_above_ma = stock_metrics.is_above_ma(self.price_history)
+        self.year_high_low_stats = stock_metrics.year_high_low(self.price_history)
+        self.year_high = self.year_high_low_stats["52W High"]
+        self.year_low = self.year_high_low_stats["52W Low"]
+        self.current_price_from_high = self.year_high_low_stats["Percent From High"]
+        self.current_price_from_low = self.year_high_low_stats["Percent From Low"]
+        self.max_drawdown = stock_metrics.max_drawdwon(self.price_history)
+        
+
 
         

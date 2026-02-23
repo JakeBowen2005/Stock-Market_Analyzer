@@ -43,8 +43,8 @@ def recent_return(data, days=21):
     if len(data) < days:
         return None
     
-    end = data["Adj Close"].iloc[-days]
-    start = data["Adj Close"].iloc[-1]
+    start = data["Adj Close"].iloc[-days]
+    end = data["Adj Close"].iloc[-1]
 
     recent = (end/start) - 1
     return float(recent)
@@ -58,6 +58,28 @@ def is_above_ma(data, window=50):
     current_price = data["Adj Close"].iloc[-1]
     current_ma = ma.iloc[-1]
     return current_price > current_ma
+
+def year_high_low(data):
+    high = data["Adj Close"].rolling(window=252).max().iloc[-1]
+    low = data["Adj Close"].rolling(window=252).min().iloc[-1]
+    current = data["Adj Close"].iloc[-1]
+
+    return {
+        "52W High": float(high),
+        "52W Low": float(low),
+        "Percent From High": float((current/high -1)),
+        "Percent From Low": float((current/low - 1))
+    }
+
+def max_drawdwon(data):
+    current_prices = data["Adj Close"]
+
+    cummax = current_prices.cummax()
+
+    drawdown = (current_prices / cummax) - 1
+    max_drawdown = drawdown.min()
+    return max_drawdown
+
 
 
 

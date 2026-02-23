@@ -18,10 +18,19 @@ pd.set_option("display.max_colwidth", None)
 
 # ticker = input("Enter stock ticker you want information on: ")
 # period = input("Enter time period you want (1d, 5d, 1mo, 6mo, 1y): ")
-ticker = "AAPl"
+user_input = input("List the tickers you want Stock Anaylsis on: ")
+tickers = []
+for c in user_input.capitalize():
+    tick = ""
+    while c != " ":
+        tick += c
+        c += 1
+    tickers.append(tick)
+        
 
 apple = Stock_class.Stock(ticker)
-print(apple.price_history["Daily Returns"].iloc[-1])
+# print(apple.price_history["Daily Returns"].iloc[-1])
+print(apple.max_drawdown)
 
 # stock = data_loader.get_ticker(ticker)
 # history = data_loader.get_history(stock, period)
