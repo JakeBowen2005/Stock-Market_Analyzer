@@ -26,7 +26,9 @@ stocks = []
 for tick in tickers:
     stocks.append(Stock_class.Stock(tick))
 portfolio = Portfolio_class.Portfolio(stocks)
-print(portfolio.stocks)
+print(portfolio.summary())
+print(f"Best Performer: {portfolio.best_performer()}")
+print(f"Worst Performer: {portfolio.worst_performer()}")
         
 
 

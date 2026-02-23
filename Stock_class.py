@@ -4,6 +4,7 @@ import stock_metrics
 class Stock:
     def __init__(self, ticker):
         # Big Data Sets
+        self.name = ticker
         self.ticker = data_loader.get_ticker(ticker)
         self.price_history = data_loader.get_history(self.ticker, '10y')
         self.price_history = stock_metrics.daily_returns(self.price_history)
@@ -23,7 +24,7 @@ class Stock:
         self.current_price_from_high = self.year_high_low_stats["Percent From High"]
         self.current_price_from_low = self.year_high_low_stats["Percent From Low"]
         self.max_drawdown = stock_metrics.max_drawdwon(self.price_history)
-        
+
 
 
         
