@@ -24,7 +24,10 @@ tickers = user_input.strip().upper().split()
 stocks = []
 
 for tick in tickers:
-    stocks.append(Stock_class.Stock(tick))
+    try:
+        stocks.append(Stock_class.Stock(tick))
+    except ValueError:
+        print(f"Skipping invalid ticker: {tick}")
 portfolio = Portfolio_class.Portfolio(stocks)
 print(portfolio.summary())
 print(f"Best Performer: {portfolio.best_performer()}")

@@ -11,6 +11,10 @@ class Stock:
         self.financials = data_loader.get_financials(self.ticker)
         self.actions = data_loader.get_actions(self.ticker)
 
+        #Validate ticker
+        if self.price_history.empty:
+            raise ValueError(f"No price data found for ticker: {ticker}")
+
         #Computed Metrics
         self.basic_stats = stock_metrics.basic_stats(self.price_history)
         self.price_to_earnings = stock_metrics.price_to_earnings(self.price_history, self.financials)
