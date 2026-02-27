@@ -30,35 +30,3 @@ for tick in tickers:
         print(f"Skipping invalid ticker: {tick}")
 portfolio = Portfolio_class.Portfolio(stocks)
 print(portfolio.summary())
-print(f"Best Performer: {portfolio.best_performer()}")
-print(f"Worst Performer: {portfolio.worst_performer()}")
-        
-
-
-# stock = data_loader.get_ticker(ticker)
-# history = data_loader.get_history(stock, period)
-# financials = data_loader.get_financials(stock)
-# actions = data_loader.get_actions(stock)
-
-# history = stock_metrics.daily_returns(history)
-
-
-# print(f"{ticker} stock information\n")
-# print(history.head())
-# P_earnings = stock_metrics.price_to_earnings(history, financials)
-# print(P_earnings)
-# print(stock_metrics.total_return_percentage(history))
-# print(stock_metrics.recent_return(history))
-# print(stock_metrics.is_above_ma(history))
-
-
-
-
-
-
-
-
-#  print(f"{ticker} Financial information\n")
-# print(financials)
-# print(f"{ticker} Actions")
-# print(actions)

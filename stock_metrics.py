@@ -80,6 +80,11 @@ def max_drawdwon(data):
     max_drawdown = drawdown.min()
     return max_drawdown
 
+def alltime_high(data):
+    highest_price = data["Adj Close"].max()
+    return highest_price
+
+
 
 
 

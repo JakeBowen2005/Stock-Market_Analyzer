@@ -28,6 +28,17 @@ class Stock:
         self.current_price_from_high = self.year_high_low_stats["Percent From High"]
         self.current_price_from_low = self.year_high_low_stats["Percent From Low"]
         self.max_drawdown = stock_metrics.max_drawdwon(self.price_history)
+        self.alltime_high = stock_metrics.alltime_high(self.price_history)
+
+
+    #Recent performace
+    def recent_performance(self):
+        print(f"{self.name} Recent Performance")
+        print(f"One Week Return: {self.one_week_return:.2f}%")
+        print(f"One Month Return: {self.one_month_return:.2f}%")
+        print(f"Price to Earnings: {self.price_to_earnings:.2f}")
+        print("------------------")
+
 
 
 
