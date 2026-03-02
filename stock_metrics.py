@@ -27,7 +27,7 @@ def basic_stats(data):
 def price_to_earnings(history,financials):
     current_price = history["Close"].iloc[-1]
 
-    eps = financials.loc["Diluted EPS"].iloc[0]
+    eps = financials.loc["Basic EPS"].iloc[0]
 
     pe = current_price/eps
     return pe
@@ -53,7 +53,7 @@ def moving_average(data, window=50):
     average = data["Adj Close"].rolling(window=window).mean()
     return average
 
-def is_above_ma(data, window=50):
+def is_above_ma(data, window):
     ma = moving_average(data, window)
     current_price = data["Adj Close"].iloc[-1]
     current_ma = ma.iloc[-1]
@@ -78,11 +78,32 @@ def max_drawdwon(data):
 
     drawdown = (current_prices / cummax) - 1
     max_drawdown = drawdown.min()
-    return max_drawdown
+    return float(max_drawdown)
 
 def alltime_high(data):
     highest_price = data["Adj Close"].max()
     return highest_price
+
+def cagr(data, years=None):
+    prices = data["Adj Close"].dropna()
+    
+    if years:
+        cutoff_date = prices.index[-1] - pd.DateOffset(years=years)
+        prices = prices[prices.index >= cutoff_date]
+        
+        if len(prices) < 2:
+            return None
+    
+    start_price = prices.iloc[0]
+    end_price = prices.iloc[-1]
+    
+    # Calculate actual years between dates
+    total_days = (prices.index[-1] - prices.index[0]).days
+    total_years = total_days / 365.25
+    
+    cagr_value = (end_price / start_price) ** (1 / total_years) -1
+    
+    return float(cagr_value)
 
 
 

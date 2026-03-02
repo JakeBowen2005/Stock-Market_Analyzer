@@ -11,6 +11,9 @@ class Stock:
         self.financials = data_loader.get_financials(self.ticker)
         self.actions = data_loader.get_actions(self.ticker)
 
+        # Current Price
+        self.current_price = self.price_history["Adj Close"].iloc[-1]
+
         #Validate ticker
         if self.price_history.empty:
             raise ValueError(f"No price data found for ticker: {ticker}")
@@ -21,7 +24,10 @@ class Stock:
         self.total_return = stock_metrics.total_return_percentage(self.price_history)
         self.one_week_return = stock_metrics.recent_return(self.price_history, days=5)
         self.one_month_return = stock_metrics.recent_return(self.price_history, days=21)
-        self.is_above_ma = stock_metrics.is_above_ma(self.price_history)
+        self.three_month_return = stock_metrics.recent_return(self.price_history, days=63)
+        self.six_month_return = stock_metrics.recent_return(self.price_history, days=126)
+        self.is_above50_ma = stock_metrics.is_above_ma(self.price_history, window=50)
+        self.is_above200_ma = stock_metrics.is_above_ma(self.price_history, window=200)
         self.year_high_low_stats = stock_metrics.year_high_low(self.price_history)
         self.year_high = self.year_high_low_stats["52W High"]
         self.year_low = self.year_high_low_stats["52W Low"]
@@ -29,16 +35,28 @@ class Stock:
         self.current_price_from_low = self.year_high_low_stats["Percent From Low"]
         self.max_drawdown = stock_metrics.max_drawdwon(self.price_history)
         self.alltime_high = stock_metrics.alltime_high(self.price_history)
+        self.eps = self.financials.loc["Basic EPS"].iloc[0]
+        self.cagr_5y = stock_metrics.cagr(self.price_history, years=5)
+        self.cagr_10y = stock_metrics.cagr(self.price_history, years=10)
 
 
     #Recent performace
     def recent_performance(self):
         print(f"{self.name} Recent Performance")
-        print(f"One Week Return: {self.one_week_return:.2f}%")
-        print(f"One Month Return: {self.one_month_return:.2f}%")
-        print(f"Price to Earnings: {self.price_to_earnings:.2f}")
-        print("------------------")
+        print(f"  One Week Return: {self.one_week_return:.2f}%")
+        print(f"  One Month Return: {self.one_month_return:.2f}%")
+        print(f"  Three Month Return: {self.three_month_return}%")
+        print(f"  Price to Earnings: {self.price_to_earnings:.2f}")
+        print(f"  Earning per share: {self.eps}")
+        print("  ------------------")
 
+
+    def longterm_performance(self):
+        print(f"{self.name} Long Term Perfomance")
+        print(f"5Y CAGR: {self.cagr_5y * 100:.2f}%")
+        print(f"10Y CAGR: {self.cagr_10y * 100:.2f}%")
+        print(f"  10 Year Total Return: {self.total_return:.2f}")
+        print(f"  Max Drawdown: {self.max_drawdown:.2f}")
 
 
 
