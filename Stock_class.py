@@ -45,7 +45,7 @@ class Stock:
         print(f"{self.name} Recent Performance")
         print(f"  One Week Return: {self.one_week_return:.2f}%")
         print(f"  One Month Return: {self.one_month_return:.2f}%")
-        print(f"  Three Month Return: {self.three_month_return}%")
+        print(f"  Three Month Return: {self.three_month_return:.2f}%")
         print(f"  Price to Earnings: {self.price_to_earnings:.2f}")
         print(f"  Earning per share: {self.eps}")
         print("  ------------------")
@@ -53,10 +53,35 @@ class Stock:
 
     def longterm_performance(self):
         print(f"{self.name} Long Term Perfomance")
-        print(f"5Y CAGR: {self.cagr_5y * 100:.2f}%")
-        print(f"10Y CAGR: {self.cagr_10y * 100:.2f}%")
+        print(f"  5Y CAGR: {self.cagr_5y * 100:.2f}%")
+        print(f"  10Y CAGR: {self.cagr_10y * 100:.2f}%")
         print(f"  10 Year Total Return: {self.total_return:.2f}")
-        print(f"  Max Drawdown: {self.max_drawdown:.2f}")
+        print(f"  Max Drawdown: {self.max_drawdown:.2f}%")
+
+    def summary_dict(self):
+        stock_dict = {
+                    "name": self.name,
+                    "current_price": round(self.current_price, 2),
+                    "annual_return": round(self.basic_stats["Annualized Return"] * 100, 2),
+                    "volatility": round(self.basic_stats["Annualized Volatility"] * 100, 2),
+                    "52w_high": round(self.year_high, 2),
+                    "52w_low": round(self.year_low, 2),
+                    "percent_from_high": round(self.current_price_from_high * 100, 2),
+                    "percent_from_low": round(self.current_price_from_low * 100, 2),
+                    "one_week_return": round(self.one_week_return * 100, 2),
+                    "one_month_return": round(self.one_month_return * 100, 2),
+                    "three_month_return": round(self.three_month_return * 100, 2),
+                    "six_month_return": round(self.six_month_return * 100, 2),
+                    "pe_ratio": round(self.price_to_earnings, 2),
+                    "eps": round(self.eps, 2),
+                    "cagr_5y": round(self.cagr_5y * 100, 2),
+                    "cagr_10y": round(self.cagr_10y * 100, 2),
+                    "total_return_10y": round(self.total_return, 2),
+                    "max_drawdown": round(self.max_drawdown * 100, 2),
+                    "above_50ma": self.is_above50_ma,
+                    "above_200ma": self.is_above200_ma,
+        }
+        return stock_dict
 
 
 
